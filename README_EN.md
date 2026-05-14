@@ -1,137 +1,204 @@
-# Storm Engine Texture Tool 0.5.2 — User Guide
+# Storm Engine Texture Tool
 
-# 1. Introduction
+Utility for viewing and converting textures with `.tga` and `.tga.tx` file types.
 
-Storm Engine Texture Tool is a utility for viewing and converting textures between `.tga.tx` and `.tga` formats.
+Designed for working with textures while creating user modifications, test materials, and non-commercial game builds based on the Storm Engine (https://github.com/storm-devs/storm-engine)
 
 The application allows you to:
-- preview textures;
-- view texture parameters;
-- convert TGA ↔ TX;
-- convert TX textures with mipmaps;
+- view textures and their properties, including resolution, storage format, color depth, alpha channel type, mip level count, and compression method;
+- convert textures between TGA and TX up to 16K resolution, including mip-level generation;
 - use DXT1 / DXT3 / DXT5 compression;
-- perform batch file conversion.
+- perform batch file conversion;
+- use the application to open `.tga.tx` files directly from Windows Explorer.
 
-The utility uses a dual-panel interface with a built-in preview area and supports the main compression modes used by the Storm Engine.
-
-NVIDIA Texture Tools library is used for texture compression.
-
-Supported formats:
-- `.tga`
-- `.tga.tx`
+Texture compression uses the latest NVIDIA Texture Tools version (NVTT 3.2.5, 2024).
 
 ---
 
-# 2. Using the Application
+# Supported Storage Formats
+
+## A8R8G8B8
+
+Uncompressed 32-bit format.
+
+- maximum image quality without losses;
+- 8-bit alpha channel transparency;
+- largest file size.
+
+Approximate texture size for 1024×1024 — ~4 MB.
+
+---
+
+## X8R8G8B8
+
+Uncompressed 32-bit format.
+
+- no transparency;
+- maximum image quality without losses;
+- largest file size.
+
+Approximate texture size for 1024×1024 — ~4 MB.
+
+---
+
+## A4R4G4B4
+
+16-bit format.
+
+- 4-bit alpha channel transparency with limited smoothness;
+- reduced color precision compared to 32-bit formats;
+- compact file size.
+
+Approximate texture size for 1024×1024 — ~2 MB.
+
+---
+
+## A1R5G5B5
+
+16-bit format.
+
+- 1-bit alpha channel transparency;
+- transparency works only in fully visible / invisible pixel mode;
+- reduced color precision;
+- compact file size.
+
+Approximate texture size for 1024×1024 — ~2 MB.
+
+---
+
+## R5G6B5
+
+16-bit format.
+
+- no transparency;
+- reduced color precision compared to 32-bit formats;
+- compact file size.
+
+Approximate texture size for 1024×1024 — ~2 MB.
+
+---
+
+## DXT1
+
+Compressed format.
+
+- 4-bit block compression;
+- 1-bit alpha channel transparency;
+- transparency works only in fully visible / invisible pixel mode;
+- noticeable image quality loss;
+- minimum file size.
+
+Approximate texture size for 1024×1024 — ~512 KB.
+
+---
+
+## DXT3
+
+Compressed format.
+
+- 8-bit block compression;
+- 4-bit alpha channel transparency;
+- higher quality compared to DXT1;
+- possible artifacts on smooth transparency gradients.
+
+Approximate texture size for 1024×1024 — ~1 MB.
+
+---
+
+## DXT5
+
+Compressed format.
+
+- 8-bit block compression;
+- 8-bit alpha channel transparency;
+- optimal balance between quality and file size;
+- most universal format.
+
+Approximate texture size for 1024×1024 — ~1 MB.
+DXT5 is the recommended format for most textures.
+
+---
+
+# Working with the Application
 
 ## Texture Preview
 
-Select a `.tga` or `.tx` file in one of the file panels.
+To preview a texture, select a `.tga` file in the left panel or a `.tga.tx` file in the right panel.
 
 The image will automatically appear in the preview area.
 
 Supported features:
-- mouse wheel zoom;
-- zoom reset;
-- 1:1 mode;
-- Fit mode;
-- image panning;
-- alpha channel preview;
-- hiding interface panels.
-
-If at least one interface panel is hidden, pressing `ESC` restores the default layout.
+- zooming (mouse wheel, slider, preview area buttons, 1:1 / 100% scale, fit to preview area);
+- texture browsing (interface buttons and left / right arrow keys);
+- image dragging;
+- background switching (light, dark, checkerboard);
+- fullscreen preview mode (hiding interface panels using fullscreen or panel toggle buttons, returning to standard mode with the `ESC` key).
 
 ---
 
-## File Panels
+## Working with Files and Folders
 
-The file panels support:
-- folder navigation;
-- pinned folders;
-- multi-selection;
-- mouse Back and Forward buttons;
-- context menu:
-  - open;
-  - open file location;
+The left file panel is предназначена for `.tga` files, the right panel — for `.tga.tx`.
+
+Supported features:
+- folder navigation buttons (back / forward, up, “My Computer”, “Downloads”, drives), additional mouse side buttons (back / forward actions);
+- pinning and unpinning folders (through the context menu or the icon to the left of the folder);
+- pinned folders section (`★`);
+- batch conversion of selected files;
+- file operations through the context menu:
+  - open file folder;
+  - open folder in Windows Explorer;
   - rename;
   - delete.
 
 ---
 
-## Information Block
+# Conversion
 
-The information block displays:
-- texture resolution;
-- format;
-- alpha type;
-- bit depth;
-- mip level count;
-- file size.
+## Converting to `.tga.tx`
 
-Some parameters include additional tooltip descriptions.
+To convert to `.tga.tx`, select a `.tga` file in the left file panel and press the “Build TX” button.
 
----
+Supported features:
+- storage format selection;
+- DXT1 / DXT3 / DXT5 compression;
+- mip-level generation;
+- replacing existing files;
+- creating copies when file names already exist.
 
-# 3. Conversion
-
-## TX Build
-
-The following formats are available for `.tga.tx` creation:
-
-Uncompressed:
-- A8R8G8B8
-- X8R8G8B8
-- A4R4G4B4
-- A1R5G5B5
-- R5G6B5
-
-DXT Compression:
-- DXT1
-- DXT3
-- DXT5
-
-Texture compression is performed using the NVIDIA Texture Tools library.
+Conversion to `.tga.tx` is supported for textures with power-of-two dimensions.
+Examples: 256×256, 512×1024, 2048×2048, 4096×8192, 16384×16384.
 
 ---
 
-## Mipmaps
+## Converting to `.tga`
+
+To convert to `.tga`, select a `.tga.tx` file in the right file panel and press the “Extract TGA” button.
+Conversion is performed into an uncompressed 32-bit A8R8G8B8 format with alpha channel while preserving the original image quality without losses.
+
+---
+
+## Mip Levels
 
 Supported modes:
-- base level only;
+- base level only (1 mip level);
 - full mip chain;
-- custom mip count.
+- custom mip-level count.
 
-Mipmaps are used for more stable texture rendering at long distances.
-
-To generate mipmaps correctly, texture dimensions must use power-of-two sizes.
+Mip levels are used for correct texture rendering at different object distances. Their amount depends on the texture size.
+Using a full mip chain is recommended for most textures.
 
 ---
 
 ## Batch Conversion
 
-The application supports simultaneous processing of multiple files.
+For batch conversion, select multiple files in the file panel and press the “Build TX” or “Extract TGA” button.
 
-Available conflict handling modes:
-- overwrite existing files;
-- create copies;
-- skip conflicting files.
+Supported features:
+- simultaneous conversion of multiple files;
+- replacing existing files;
+- creating copies;
+- skipping conflicting files.
 
-After conversion is complete, the application displays a final processing result.
-
----
-
-# 4. Additional Information
-
-The application can be used as the default viewer for `.tga.tx` files.
-
-Default file association is available in the "About" section.
-
----
-
-# 5. Limitations
-
-The utility supports textures with power-of-two dimensions only.
-
-Some textures may use non-standard storage parameters.
-
-DXT compression may affect image quality.
+During conversion, the processing progress and the number of processed textures are displayed.
+After completion, the final processing result is shown.
