@@ -1,17 +1,16 @@
 # Storm Engine Texture Tool
 
-Utility for viewing and converting textures with `.tga`, `.png`, and `.tga.tx` file types.
+Utility for viewing and converting textures with `.tga`, `.png`, `.tga.tx`, and `.dds` file types.
 
 Designed for working with textures while creating user modifications, test materials, and non-commercial game builds based on the Storm Engine ([Storm Engine GitHub](https://github.com/storm-devs/storm-engine)).
 
 The application allows you to:
 - view textures and their properties, including resolution, storage format, color depth, alpha channel type, mip level count, and compression method;
-- convert `.tga` and `.png` textures to `.tga.tx` at resolutions up to 16K, including mip-level generation;
-- unpack `.tga.tx` into `.tga` or `.png` without quality loss;
+- convert from `.tga` or `.png` to `.dds` or `.tga.tx` at resolutions up to 16K, including mip-level generation;
+- convert from `.dds` or `.tga.tx` to `.tga` or `.png` without quality loss;
 - use DXT1 / DXT3 / DXT5 compression;
 - perform single-file and batch file conversion;
-- use a convenient bulk upscaling pipeline: unpack `.tga.tx` to `.png`, process textures in an external upscaler, then build them back into `.tga.tx`;
-- open `.tga` and `.tga.tx` files directly from Windows Explorer.
+- open `.tga`, `.tga.tx`, and `.dds` files directly from Windows Explorer.
 
 Texture compression uses the latest NVIDIA Texture Tools version (NVTT 3.2.5, 2024).
 
@@ -117,7 +116,7 @@ Compressed format.
 
 ## Texture Preview
 
-To preview a texture, select a `.tga` or `.png` file in the left file panel, or a `.tga.tx` file in the right file panel.
+To preview a texture, select a `.tga` or `.png` file in the left file panel, or a `.dds` or `.tga.tx` file in the right file panel.
 
 Supported features:
 - zooming with the mouse wheel, slider, and `1:1`, `100%`, `Fit` buttons;
@@ -130,46 +129,46 @@ Supported features:
 
 ## Working with Files and Folders
 
-The left file panel is intended for `.tga` and `.png`, the right panel — for `.tga.tx`.
+The left file panel is intended for `.tga` and `.png` (source files); the right panel is for `.dds` and `.tga.tx` (output files).
 
 Supported features:
 - folder navigation with `Back`, `Forward`, `Up`, `My Computer`, `Downloads`, and mouse side buttons;
 - file list navigation with `↑`, `↓`, `←`, `→`;
-- file sorting by name and file type;
-- pinning and unpinning folders through the context menu or the icon to the left of the folder;
-- pinned folders section (`★`);
+- quick file jump: pressing a letter or digit in the file list selects the nearest file whose name starts with that character;
+- file sorting by name, type, size, and format;
+- pinning and unpinning folders through the context menu or the icon to the left of the folder in the file table or in the pinned folders block;
+- pinned folders are displayed above the file table in each file panel;
 - drag-and-drop reordering of pinned folders;
-- opening the conversion window with `Enter`, confirming actions with `Enter`, deleting selected files with `Delete`;
-- context menu actions: open file folder, open folder in Windows Explorer, rename, delete.
+- opening the conversion window with `Enter`, confirming actions with `Enter`, renaming with `F2`, deleting selected files with `Delete`;
+- context menu actions: convert, open file folder, open folder in Windows Explorer, rename, delete.
 
 ---
 
 # Conversion
 
-## Converting to `.tga.tx`
+## Convert to DDS / TGA.TX
 
-To convert to `.tga.tx`, select a `.tga` or `.png` file in the left file panel and press the `Build TX` button.
+Select a `.tga` or `.png` file in the left file panel and press:
+- `DDS →` — convert to `.dds`;
+- `TGA.TX →` — convert to `.tga.tx`.
 
 Supported features:
-- storage format selection;
+- storage format selection (8 formats: A8R8G8B8, X8R8G8B8, R5G6B5, A1R5G5B5, A4R4G4B4, DXT1, DXT3, DXT5);
 - DXT1 / DXT3 / DXT5 compression;
 - mip-level generation;
 - replacing existing files;
 - creating copies when file names already exist;
 - calculating the total size of selected files before and after conversion.
 
-Conversion to `.tga.tx` is supported for textures with power-of-two dimensions.
-For example: 256×256, 512×1024, 2048×2048, 4096×8192, 16384×16384.
+Conversion is supported for textures of any resolution up to 16384×16384.
 
 ---
 
-## Unpacking `.tga.tx`
+## Convert to TGA / PNG
 
-To unpack `.tga.tx`, select the desired file in the right file panel and press the `Unpack` button.
-
-In the unpacking window, select the output format:
-- `.tga` — 32-bit TGA, 8-bit alpha, lossless;
-- `.png` — 32-bit PNG, 8-bit alpha, lossless.
+Select a `.dds` or `.tga.tx` file in the right file panel and press:
+- `← TGA` — output format TGA, 32-bit, 8-bit alpha, lossless;
+- `← PNG` — output format PNG, 32-bit, 8-bit alpha, lossless.
 
 ---
 
@@ -187,13 +186,14 @@ A full mip chain is recommended for most textures.
 
 ## Batch Conversion
 
-For batch conversion, select several files in the file panel and press the `Build TX` or `Unpack` button.
+For batch conversion, select several files in the file panel and press the conversion button.
 
 Supported features:
-- simultaneous conversion of several `.png` and `.tga` files;
+- simultaneous conversion of several `.tga` and `.png` or several `.dds` / `.tga.tx` files;
 - replacing existing files;
 - creating copies;
 - skipping conflicting files.
 
 During conversion, the processing progress and the number of processed textures are displayed.
 After the operation is completed, the final processing result is displayed.
+
