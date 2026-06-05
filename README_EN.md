@@ -10,7 +10,8 @@ The application allows you to:
 - convert from `.dds` or `.tga.tx` to `.tga` or `.png` without quality loss;
 - use DXT1 / DXT3 / DXT5 compression;
 - perform single-file and batch file conversion;
-- open `.tga`, `.tga.tx`, and `.dds` files directly from Windows Explorer.
+- open `.tga`, `.dds`, and `.tga.tx` files directly from Windows Explorer;
+- work in one or several windows.
 
 Texture compression uses the latest NVIDIA Texture Tools version (NVTT 3.2.5, 2024).
 
@@ -107,7 +108,6 @@ Compressed format.
 
 - compression, smooth alpha;
 - no noticeable quality loss;
-- recommended by default;
 - approximate texture size for 1024×1024 — ~1 MB.
 
 ---
@@ -119,11 +119,11 @@ Compressed format.
 To preview a texture, select a `.tga` or `.png` file in the left file panel, or a `.dds` or `.tga.tx` file in the right file panel.
 
 Supported features:
-- zooming with the mouse wheel, slider, and `1:1`, `100%`, `Fit` buttons;
+- zooming with the mouse wheel, slider, and the `1:1` (100%) and `⛶` (Fit) buttons;
 - browsing textures using interface buttons and `←`, `→`, `↑`, `↓` keys;
 - dragging the image with the mouse;
 - switching preview background modes;
-- fullscreen preview mode with exit by `ESC`.
+- fullscreen preview mode via the `Expand Preview` button, with exit by `ESC`.
 
 ---
 
@@ -132,15 +132,34 @@ Supported features:
 The left file panel is intended for `.tga` and `.png` (source files); the right panel is for `.dds` and `.tga.tx` (output files).
 
 Supported features:
-- folder navigation with `Back`, `Forward`, `Up`, `My Computer`, `Downloads`, and mouse side buttons;
-- file list navigation with `↑`, `↓`, `←`, `→`;
+- folder navigation with `Home` (go to the drive list), `Up`, `Back`, `Forward`, and mouse side buttons;
+- file list navigation with the keyboard `↑`, `↓`, `←`, `→`;
 - quick file jump: pressing a letter or digit in the file list selects the nearest file whose name starts with that character;
-- file sorting by name, type, size, and format;
+- file sorting by name, type, size, and format, ascending and descending (A to Z and Z to A);
 - pinning and unpinning folders through the context menu or the icon to the left of the folder in the file table or in the pinned folders block;
 - pinned folders are displayed above the file table in each file panel;
 - drag-and-drop reordering of pinned folders;
-- opening the conversion window with `Enter`, confirming actions with `Enter`, renaming with `F2`, deleting selected files with `Delete`;
+- opening the conversion window with a double-click or `Enter`; the output format is the last one selected in that panel (`DDS` or `TGA.TX` on the left, `TGA` or `PNG` on the right);
+- confirming actions with `Enter`, renaming with `F2`, deleting selected files with `Delete`;
 - context menu actions: convert, open file folder, open folder in Windows Explorer, rename, delete.
+
+---
+
+## File Association
+
+In the About window, the “Open TGA / DDS / TGA.TX with Storm Engine Texture Tool” switch sets the application as the default program for `.tga`, `.dds`, and `.tga.tx` files.
+
+- enabled — the files open from Windows Explorer and are shown with their own format icons;
+- disabled — the association and icons are removed, and the files open with the previous default program.
+
+---
+
+## Multiple Windows
+
+In the About window, the “Allow opening in multiple windows” switch controls the behavior when the application is launched again or a file is opened.
+
+- enabled — each new launch or file opening creates a separate window;
+- disabled — the already open window is used.
 
 ---
 
@@ -158,7 +177,8 @@ Supported features:
 - mip-level generation;
 - replacing existing files;
 - creating copies when file names already exist;
-- calculating the total size of selected files before and after conversion.
+- calculating the total size of selected files before and after conversion;
+- remembering settings: after a successful conversion, the selected format, alpha state, and mip-level settings are saved separately for DDS and TGA.TX and applied the next time the window is opened.
 
 Conversion is supported for textures of any resolution up to 16384×16384.
 
@@ -195,5 +215,4 @@ Supported features:
 - skipping conflicting files.
 
 During conversion, the processing progress and the number of processed textures are displayed.
-After the operation is completed, the final processing result is displayed.
 
